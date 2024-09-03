@@ -1,8 +1,16 @@
 {% extends 'diary/base.html' %}
+{% load my_tags %}
 {% block content %}
+
 <article class="blog-post">
-    <h2 class="display-5 link-body-emphasis mb-1">{{ entry.title }}</h2>
-    <p class="blog-post-meta">{{ entry.created_at }} <a href="#">Mark</a></p>
-    <p>{{ entry.content }}</p>
+    <h2 class="display-5 link-body-emphasis mb-1">{{ object.title }}</h2>
+    <p class="blog-post-meta">{{ object.created_at }} <a href="#">Mark</a></p>
+    <p>{{ object.content }}</p>
+    <br>
+    <img src="{{ entry.image | media_filter }}" width="700" height="450">
+    <br>
+    <br>
+    <a class="btn btn-outline-light" href="{% url 'diary:entry_list' %}" role="button">На главную страницу</a>
 </article>
+
 {% endblock %}

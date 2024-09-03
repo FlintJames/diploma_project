@@ -1,15 +1,18 @@
-from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView
 
 from diary.models import Entry
 
 
-def entry_list(request):
-    entrys = Entry.objects.all()
-    context = {"entrys": entrys}
-    return render(request, "diary/entry_list.html", context)
+class EntryListView(ListView):
+    model = Entry
 
 
-def entry_detail(request, pk):
-    entry = get_object_or_404(Entry, pk=pk)
-    context = {"entry": entry}
-    return render(request, "diary/entry_detail.html", context)
+class EntryDetailView(DetailView):
+    model = Entry
+
+
+class EntryCreateView(CreateView):
+    model = Entry
+    fields = ("title", "content", "image", "publication_sign", "number_of_views")
+    success_url = reverse_lazy("diary:entry_list")

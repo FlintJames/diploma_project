@@ -2,17 +2,24 @@
 {% load my_tags %}
 {% block content %}
 
-{% for entry in entrys %}
+{% for entry in object_list %}
 <div class="col-md-6">
     <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="col p-4 d-flex flex-column position-static">
-            <strong class="d-inline-block mb-2 text-primary-emphasis">World</strong>
             <h3 class="mb-0">{{ entry.title }}</h3>
             <div class="mb-1 text-body-secondary">{{ entry.created_at }}</div>
-            <p class="card-text mb-auto">{{ entry.content }}</p>
+            <br>
+            <br>
+            <br>
+            <a href="{% url 'diary:entry_detail' entry.pk %}" class="icon-link gap-1 icon-link-hover link-light">
+                Прочитать
+                <svg class="bi">
+                    <use xlink:href="#chevron-right"/>
+                </svg>
+            </a>
         </div>
         <div class="col-md-7">
-          <img src="{{ entry.image | media_filter }}" width="400" height="250">
+            <img src="{{ entry.image | media_filter }}" width="400" height="250">
         </div>
     </div>
 </div>
