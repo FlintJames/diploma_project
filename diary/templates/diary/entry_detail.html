@@ -11,6 +11,8 @@
     <br>
     <br>
     <a class="btn btn-outline-light" href="{% url 'diary:entry_list' %}" role="button">На главную страницу</a>
+    <a class="btn btn-outline-light" href="{% url 'diary:entry_update' entry.pk %}" role="button">Редактировать запись</a>
+    <a class="btn btn-outline-light" href="{% url 'diary:entry_delete' entry.pk %}" role="button">Удалить запись</a>
 </article>
 
 {% endblock %}
