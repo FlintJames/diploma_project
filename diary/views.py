@@ -1,6 +1,8 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
+from diary.forms import EntryForm
 from diary.models import Entry
 
 
@@ -18,21 +20,28 @@ class EntryDetailView(DetailView):
         return self.object
 
 
-class EntryCreateView(CreateView):
+class EntryCreateView(CreateView, LoginRequiredMixin):
     model = Entry
-    fields = ("title", "content", "image", "publication_sign")
+    form_class = EntryForm
     success_url = reverse_lazy("diary:entry_list")
 
+    def form_valid(self, form):
+        entry = form.save()
+        user = self.request.user
+        entry.owner = user
+        entry.save()
+        return super().form_valid(form)
 
-class EntryUpdateView(UpdateView):
+
+class EntryUpdateView(LoginRequiredMixin, UpdateView):
     model = Entry
-    fields = ("title", "content", "image", "publication_sign")
+    form_class = EntryForm
     success_url = reverse_lazy("diary:entry_list")
 
     def get_success_url(self):
         return reverse('diary:entry_detail', args=[self.kwargs.get('pk')])
 
 
-class EntryDeleteView(DeleteView):
+class EntryDeleteView(LoginRequiredMixin, DeleteView):
     model = Entry
     success_url = reverse_lazy("diary:entry_list")

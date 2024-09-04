@@ -11,8 +11,10 @@
     <br>
     <br>
     <a class="btn btn-outline-light" href="{% url 'diary:entry_list' %}" role="button">На главную страницу</a>
+    {% if user.is_authenticated and user == entry.owner %}
     <a class="btn btn-outline-light" href="{% url 'diary:entry_update' entry.pk %}" role="button">Редактировать запись</a>
     <a class="btn btn-outline-light" href="{% url 'diary:entry_delete' entry.pk %}" role="button">Удалить запись</a>
+    {% endif %}
 </article>
 
 {% endblock %}

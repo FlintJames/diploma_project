@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 from diary.apps import DiaryConfig
 from diary.views import EntryListView, EntryDetailView, EntryCreateView, EntryUpdateView, EntryDeleteView
 
