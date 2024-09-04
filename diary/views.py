@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
@@ -45,3 +46,7 @@ class EntryUpdateView(LoginRequiredMixin, UpdateView):
 class EntryDeleteView(LoginRequiredMixin, DeleteView):
     model = Entry
     success_url = reverse_lazy("diary:entry_list")
+
+
+def about(request):
+    return render(request, "about.html")

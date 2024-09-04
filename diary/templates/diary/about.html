@@ -1,0 +1,15 @@
+{% extends 'diary/base.html' %}
+{% block content %}
+
+<article class="blog-post">
+    <h2 class="display-5 link-body-emphasis mb-1">О нас</h2>
+    <p>Дневник "Мысль" – это комфортный интернет-дневник, записи в котором можно вести в любое комфортное вам время с
+        любимого устройства. Это возможность записать мысли, сделать наброски, выговориться или запечатлеть особый
+        памятный момент вашей жизни.</p>
+    <br>
+    <br>
+    <br>
+    <a class="btn btn-outline-light" href="{% url 'diary:entry_list' %}" role="button">На главную страницу</a>
+</article>
+
+{% endblock %}
