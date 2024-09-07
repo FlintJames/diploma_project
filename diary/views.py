@@ -1,4 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
+
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -7,8 +9,24 @@ from diary.forms import EntryForm
 from diary.models import Entry
 
 
+class SearchEntryListView(ListView):
+    model = Entry
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        text_search = self.request.GET.get("search")
+        if text_search is None or not text_search:
+            context["object_list"] = Entry.objects.all()
+        else:
+            context["object_list"] = Entry.objects.filter(Q(title__contains=text_search) | Q(content__contains=text_search))
+        return context
+
+
 class EntryListView(ListView):
     model = Entry
+
+    def get_queryset(self):
+        return Entry.objects.filter(owner=self.request.user)
 
 
 class EntryDetailView(DetailView):
@@ -49,4 +67,8 @@ class EntryDeleteView(LoginRequiredMixin, DeleteView):
 
 
 def about(request):
-    return render(request, "about.html")
+    return render(request, "diary/about.html")
+
+
+def base(request):
+    return render(request, "diary/base.html")
