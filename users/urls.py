@@ -3,6 +3,8 @@ from django.urls import path
 from users.apps import UsersConfig
 from users.views import UserCreateView, email_verification
 
+"""Указание путей для корректной регистрации, входа в систему и выхода пользователей"""
+
 app_name = UsersConfig.name
 
 urlpatterns = [

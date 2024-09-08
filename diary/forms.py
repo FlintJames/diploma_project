@@ -2,6 +2,8 @@ from django.forms import ModelForm, BooleanField
 
 from diary.models import Entry
 
+"""Стилизация формы"""
+
 
 class StyleFormMixin:
     def __init__(self, *args, **kwargs):
@@ -11,6 +13,10 @@ class StyleFormMixin:
                 field.widget.attrs['class'] = 'form-check-input'
             else:
                 field.widget.attrs['class'] = 'form-control'
+
+
+"""Приведение формы отображения для заполнения"""
+
 
 class EntryForm(StyleFormMixin, ModelForm):
     class Meta:

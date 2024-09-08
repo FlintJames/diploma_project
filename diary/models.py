@@ -3,6 +3,8 @@ from users.models import User
 
 NULLABLE = {"blank": True, "null": True}
 
+"""Модель 'Запись'"""
+
 
 class Entry(models.Model):
     title = models.CharField(max_length=200, verbose_name="Заголовок")

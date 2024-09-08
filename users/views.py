@@ -12,6 +12,8 @@ from users.models import User
 
 from config.settings import EMAIL_HOST_USER
 
+"""Контроллер создания/регистрации пользователя"""
+
 
 class UserCreateView(CreateView):
     model = User
@@ -35,11 +37,17 @@ class UserCreateView(CreateView):
         return super().form_valid(form)
 
 
+"""Функция проверки пользователя"""
+
+
 def email_verification(request, token):
     user = get_object_or_404(User, token=token)
     user.is_active = True
     user.save()
     return redirect(reverse("users:login"))
+
+
+"""Контроллер создания пароля аккаунта пользователя"""
 
 
 class GeneratePasswordView(PasswordResetView):

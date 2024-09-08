@@ -8,6 +8,8 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from diary.forms import EntryForm
 from diary.models import Entry
 
+"""Контроллер поиска"""
+
 
 class SearchEntryListView(ListView):
     model = Entry
@@ -18,15 +20,22 @@ class SearchEntryListView(ListView):
         if text_search is None or not text_search:
             context["object_list"] = Entry.objects.all()
         else:
-            context["object_list"] = Entry.objects.filter(Q(title__contains=text_search) | Q(content__contains=text_search))
+            context["object_list"] = Entry.objects.filter(
+                Q(title__contains=text_search) | Q(content__contains=text_search))
         return context
+
+
+"""Контроллер отображения всех записей дневника"""
 
 
 class EntryListView(ListView):
     model = Entry
 
-    def get_queryset(self):
-        return Entry.objects.filter(owner=self.request.user)
+    # def get_queryset(self):
+    #     return Entry.objects.filter(owner=self.request.user)
+
+
+"""Контроллер подробного отображения одной записи дневника"""
 
 
 class EntryDetailView(DetailView):
@@ -37,6 +46,9 @@ class EntryDetailView(DetailView):
         self.object.views_counter += 1
         self.object.save()
         return self.object
+
+
+"""Контроллер создания одной записи дневника"""
 
 
 class EntryCreateView(CreateView, LoginRequiredMixin):
@@ -52,6 +64,9 @@ class EntryCreateView(CreateView, LoginRequiredMixin):
         return super().form_valid(form)
 
 
+"""Контроллер для внесения изменений одной записи дневника"""
+
+
 class EntryUpdateView(LoginRequiredMixin, UpdateView):
     model = Entry
     form_class = EntryForm
@@ -61,14 +76,16 @@ class EntryUpdateView(LoginRequiredMixin, UpdateView):
         return reverse('diary:entry_detail', args=[self.kwargs.get('pk')])
 
 
+"""Контроллер удаления одной записи дневника"""
+
+
 class EntryDeleteView(LoginRequiredMixin, DeleteView):
     model = Entry
     success_url = reverse_lazy("diary:entry_list")
 
 
-def about(request):
-    return render(request, "diary/about.html")
+"""Функция отображения главной страницы"""
 
 
-def base(request):
-    return render(request, "diary/base.html")
+def top(request):
+    return render(request, "diary/top.html")
