@@ -3,10 +3,10 @@ from users.models import User
 
 NULLABLE = {"blank": True, "null": True}
 
-"""Модель 'Запись'"""
-
 
 class Entry(models.Model):
+    """Модель 'Запись'"""
+
     title = models.CharField(max_length=200, verbose_name="Заголовок")
     content = models.TextField(verbose_name="Содержимое")
     image = models.ImageField(

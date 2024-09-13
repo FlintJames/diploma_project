@@ -2,10 +2,10 @@ from django.forms import ModelForm, BooleanField
 
 from diary.models import Entry
 
-"""Стилизация формы"""
-
 
 class StyleFormMixin:
+    """Стилизация формы"""
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
@@ -15,10 +15,9 @@ class StyleFormMixin:
                 field.widget.attrs['class'] = 'form-control'
 
 
-"""Приведение формы отображения для заполнения"""
-
-
 class EntryForm(StyleFormMixin, ModelForm):
+    """Приведение формы отображения для заполнения"""
+
     class Meta:
         model = Entry
         exclude = ('views_counter', 'owner', 'number_of_views', 'publication_sign',)

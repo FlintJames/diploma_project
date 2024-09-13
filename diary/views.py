@@ -8,10 +8,10 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from diary.forms import EntryForm
 from diary.models import Entry
 
-"""Контроллер поиска"""
-
 
 class SearchEntryListView(ListView):
+    """Контроллер поиска"""
+
     model = Entry
 
     def get_context_data(self, **kwargs):
@@ -25,20 +25,18 @@ class SearchEntryListView(ListView):
         return context
 
 
-"""Контроллер отображения всех записей дневника"""
-
-
 class EntryListView(ListView):
+    """Контроллер отображения всех записей дневника"""
+
     model = Entry
 
     # def get_queryset(self):
     #     return Entry.objects.filter(owner=self.request.user)
 
 
-"""Контроллер подробного отображения одной записи дневника"""
-
-
 class EntryDetailView(DetailView):
+    """Контроллер подробного отображения одной записи дневника"""
+
     model = Entry
 
     def get_object(self, queryset=None):
@@ -48,10 +46,9 @@ class EntryDetailView(DetailView):
         return self.object
 
 
-"""Контроллер создания одной записи дневника"""
-
-
 class EntryCreateView(CreateView, LoginRequiredMixin):
+    """Контроллер создания одной записи дневника"""
+
     model = Entry
     form_class = EntryForm
     success_url = reverse_lazy("diary:entry_list")
@@ -64,10 +61,9 @@ class EntryCreateView(CreateView, LoginRequiredMixin):
         return super().form_valid(form)
 
 
-"""Контроллер для внесения изменений одной записи дневника"""
-
-
 class EntryUpdateView(LoginRequiredMixin, UpdateView):
+    """Контроллер для внесения изменений одной записи дневника"""
+
     model = Entry
     form_class = EntryForm
     success_url = reverse_lazy("diary:entry_list")
@@ -76,16 +72,14 @@ class EntryUpdateView(LoginRequiredMixin, UpdateView):
         return reverse('diary:entry_detail', args=[self.kwargs.get('pk')])
 
 
-"""Контроллер удаления одной записи дневника"""
-
-
 class EntryDeleteView(LoginRequiredMixin, DeleteView):
+    """Контроллер удаления одной записи дневника"""
+
     model = Entry
     success_url = reverse_lazy("diary:entry_list")
 
 
-"""Функция отображения главной страницы"""
-
-
 def top(request):
+    """Функция отображения главной страницы"""
+
     return render(request, "diary/top.html")

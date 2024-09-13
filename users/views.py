@@ -12,10 +12,10 @@ from users.models import User
 
 from config.settings import EMAIL_HOST_USER
 
-"""Контроллер создания/регистрации пользователя"""
-
 
 class UserCreateView(CreateView):
+    """Контроллер создания/регистрации пользователя"""
+
     model = User
     form_class = UserRegisterForm
     success_url = reverse_lazy('users:login')
@@ -37,20 +37,18 @@ class UserCreateView(CreateView):
         return super().form_valid(form)
 
 
-"""Функция проверки пользователя"""
-
-
 def email_verification(request, token):
+    """Функция проверки пользователя"""
+
     user = get_object_or_404(User, token=token)
     user.is_active = True
     user.save()
     return redirect(reverse("users:login"))
 
 
-"""Контроллер создания пароля аккаунта пользователя"""
-
-
 class GeneratePasswordView(PasswordResetView):
+    """Контроллер создания пароля аккаунта пользователя"""
+
     form_class = PasswordResetForm
     template_name = 'users/generate_password.html'
 
